@@ -1,10 +1,8 @@
-package practice.postpractice.domain.controller;
-
-import org.springframework.stereotype.Controller;
+package practice.postpractice.domain.member.dto;
 
 /**
- * <br>package name   : practice.postpractice.domain.controller
- * <br>file name      : MovieController
+ * <br>package name   : practice.postpractice.domain.domain.member
+ * <br>file name      : CreateMemberDto
  * <br>date           : 2024-08-21
  * <pre>
  * <span style="color: white;">[description]</span>
@@ -23,6 +21,9 @@ import org.springframework.stereotype.Controller;
  * 2024-08-21        SeungHoon              init create
  * </pre>
  */
-@Controller
-public class MovieController {
+public record CreateMemberDto(
+        String username,
+        String password,
+        String nickname
+) {
 }

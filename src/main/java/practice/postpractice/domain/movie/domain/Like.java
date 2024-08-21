@@ -1,10 +1,13 @@
-package practice.postpractice.domain.domain;
+package practice.postpractice.domain.movie.domain;
 
 import jakarta.persistence.*;
+import practice.postpractice.domain.member.domain.Member;
+
+import java.time.LocalDateTime;
 
 /**
- * <br>package name   : practice.postpractice.domain
- * <br>file name      : Member
+ * <br>package name   : practice.postpractice.domain.domain
+ * <br>file name      : Like
  * <br>date           : 2024-08-21
  * <pre>
  * <span style="color: white;">[description]</span>
@@ -24,12 +27,20 @@ import jakarta.persistence.*;
  * </pre>
  */
 @Entity
-public class Member {
+@Table(name = "Likes")
+public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
+    @Column(name = "likes_id")
     private long id;
 
-    private String username;
-    private String password;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "movie_id")
+    private Movie movie;
+
+    private LocalDateTime likedAt;
 }

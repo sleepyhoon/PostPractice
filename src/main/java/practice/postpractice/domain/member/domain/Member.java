@@ -1,13 +1,10 @@
-package practice.postpractice.domain.domain;
+package practice.postpractice.domain.member.domain;
 
 import jakarta.persistence.*;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * <br>package name   : practice.postpractice.domain
- * <br>file name      : Genre
+ * <br>file name      : Member
  * <br>date           : 2024-08-21
  * <pre>
  * <span style="color: white;">[description]</span>
@@ -27,15 +24,12 @@ import java.util.Set;
  * </pre>
  */
 @Entity
-public class Genre {
+public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "genre_id")
-    private Long id;
+    @Column(name = "member_id")
+    private long id;
 
-    private String name;
-
-    @OneToMany(mappedBy = "genre")
-    private Set<MovieGenre> movieGenres = new HashSet<>();
+    private String username;
+    private String password;
 }
-

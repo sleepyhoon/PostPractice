@@ -1,11 +1,10 @@
-package practice.postpractice.domain.service;
+package practice.postpractice.domain.movie.controller;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Controller;
 
 /**
- * <br>package name   : practice.postpractice.domain.service
- * <br>file name      : MovieService
+ * <br>package name   : practice.postpractice.domain.controller
+ * <br>file name      : MovieController
  * <br>date           : 2024-08-21
  * <pre>
  * <span style="color: white;">[description]</span>
@@ -24,7 +23,6 @@ import org.springframework.stereotype.Service;
  * 2024-08-21        SeungHoon              init create
  * </pre>
  */
-@Service
-@RequiredArgsConstructor
-public class MovieService {
+@Controller
+public class MovieController {
 }

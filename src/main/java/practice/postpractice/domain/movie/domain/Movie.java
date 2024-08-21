@@ -1,11 +1,14 @@
-package practice.postpractice.domain.domain;
+package practice.postpractice.domain.movie.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * <br>package name   : practice.postpractice.domain
- * <br>file name      : MovieGenre
+ * <br>file name      : Movie
  * <br>date           : 2024-08-21
  * <pre>
  * <span style="color: white;">[description]</span>
@@ -26,16 +29,16 @@ import lombok.Getter;
  */
 @Entity
 @Getter
-public class MovieGenre {
+public class Movie {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "moive_id")
+    private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "movie_id")
-    private Movie movie;
+    private String title;
+    private long tId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "genre_id")
-    private Genre genre;
+    @OneToMany(mappedBy = "movie")
+    private Set<MovieGenre> movieGenres = new HashSet<>();
 }

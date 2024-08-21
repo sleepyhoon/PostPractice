@@ -1,12 +1,13 @@
-package practice.postpractice.domain.domain;
+package practice.postpractice.domain.movie.domain;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * <br>package name   : practice.postpractice.domain.domain
- * <br>file name      : Like
+ * <br>package name   : practice.postpractice.domain
+ * <br>file name      : Genre
  * <br>date           : 2024-08-21
  * <pre>
  * <span style="color: white;">[description]</span>
@@ -26,20 +27,15 @@ import java.time.LocalDateTime;
  * </pre>
  */
 @Entity
-@Table(name = "Likes")
-public class Like {
+public class Genre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "likes_id")
-    private long id;
+    @Column(name = "genre_id")
+    private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "movie_id")
-    private Movie movie;
-
-    private LocalDateTime likedAt;
+    @OneToMany(mappedBy = "genre")
+    private Set<MovieGenre> movieGenres = new HashSet<>();
 }
+
