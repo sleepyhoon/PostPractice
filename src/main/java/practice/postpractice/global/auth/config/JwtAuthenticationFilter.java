@@ -1,4 +1,4 @@
-package practice.postpractice.global.auth.jwt;
+package practice.postpractice.global.auth.config;
 
 import io.jsonwebtoken.ClaimJwtException;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
+import practice.postpractice.global.auth.jwt.component.JwtValidator;
 import practice.postpractice.global.exception.errorCode.ErrorCode;
 import practice.postpractice.global.exception.exception.NullJwtException;
 
@@ -44,11 +45,11 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     private final JwtValidator jwtValidator;
 
     private static final List<String> EXCLUDE_URLS = List.of(
-            // 추후 추가
+            "/member/register",
+            "/member/login"
     );
 
     private static final List<String> EXCLUDE_URL_PREFIXES = List.of(
-            // 추후 추가
     );
 
     @Override

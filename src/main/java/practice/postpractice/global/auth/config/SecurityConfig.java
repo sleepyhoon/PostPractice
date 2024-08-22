@@ -13,8 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import practice.postpractice.global.auth.jwt.JwtAuthenticationFilter;
-import practice.postpractice.global.auth.jwt.JwtValidator;
+import practice.postpractice.global.auth.jwt.component.JwtValidator;
 
 /**
  * <br>package name   : practice.postpractice.global.auth.config
@@ -51,8 +50,10 @@ public class SecurityConfig {
                 .sessionManagement((sessionManagement)->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((auth)->
-                        auth.anyRequest().permitAll())
-                .addFilterBefore(new JwtAuthenticationFilter(jwtValidator), UsernamePasswordAuthenticationFilter.class);
+                        auth
+                                .anyRequest().permitAll())
+                .addFilterBefore(new JwtAuthenticationFilter(jwtValidator),
+                        UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

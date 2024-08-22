@@ -28,7 +28,15 @@ import org.springframework.http.HttpStatus;
 @Getter
 @AllArgsConstructor
 public enum ErrorCode {
+    //register
+    DUPLICATE_USER(HttpStatus.CONFLICT, "Duplicate User"),
     //member
+    CREDENTIAL_INVALID(HttpStatus.UNAUTHORIZED, "username or password invalid"),
+    LOCK_ACCOUNT(HttpStatus.LOCKED, "account locked"),
+    DISABLED_ACCOUNT(HttpStatus.FORBIDDEN, "account disabled"),
+    EXPIRED_ACCOUNT(HttpStatus.FORBIDDEN, "account expired"),
+    CREDENTIAL_EXPIRED_ACCOUNT(HttpStatus.FORBIDDEN, "account credential expired"),
+    INTERNAL_AUTHENTICATION_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "error while authentication service"),
 
     //jwt
     NOT_EXIST_AUTHENTICATION_IN_TOKEN(HttpStatus.UNAUTHORIZED,"인증을 찾을 수 없습니다."),

@@ -1,4 +1,4 @@
-package practice.postpractice.global.auth.jwt;
+package practice.postpractice.global.auth.jwt.component;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
