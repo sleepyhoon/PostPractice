@@ -1,15 +1,14 @@
 package practice.postpractice.domain.movie.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import practice.postpractice.domain.BaseEntity;
 import practice.postpractice.domain.member.domain.Member;
 
-import java.time.LocalDateTime;
-
 /**
- * <br>package name   : practice.postpractice.domain.domain
- * <br>file name      : Like
- * <br>date           : 2024-08-21
+ * <br>package name   : practice.postpractice.domain.movie.domain
+ * <br>file name      : Comment
+ * <br>date           : 2024-08-22
  * <pre>
  * <span style="color: white;">[description]</span>
  *
@@ -24,22 +23,25 @@ import java.time.LocalDateTime;
  * =======================================================
  * DATE           AUTHOR               NOTE
  * -------------------------------------------------------
- * 2024-08-21        SeungHoon              init create
+ * 2024-08-22        SeungHoon              init create
  * </pre>
  */
 @Entity
-@Table(name = "Likes")
-public class Like extends BaseEntity {
+@Getter
+public class Comment extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "likes_id")
+    @Column(name = "comment_id")
     private long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "movie_id", nullable = false)
+    private Movie movie;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "movie_id")
-    private Movie movie;
+    @JoinColumn(name = "member_id", nullable = false)
+    private Member writer; // 작성자 정보
+
+    @Column(nullable = false)
+    private String content;
 }
