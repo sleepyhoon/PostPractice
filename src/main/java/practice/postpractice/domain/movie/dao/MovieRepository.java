@@ -1,8 +1,11 @@
-package practice.postpractice.domain.movie.service;
+package practice.postpractice.domain.movie.dao;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import practice.postpractice.domain.movie.domain.Movie;
 
 /**
- * <br>package name   : practice.postpractice.domain.movie.service
- * <br>file name      : MovieService
+ * <br>package name   : practice.postpractice.domain.movie.dao
+ * <br>file name      : MovieRepository
  * <br>date           : 2024-08-22
  * <pre>
  * <span style="color: white;">[description]</span>
@@ -21,5 +24,5 @@ package practice.postpractice.domain.movie.service;
  * 2024-08-22        SeungHoon              init create
  * </pre>
  */
-public interface MovieService {
+public interface MovieRepository extends JpaRepository<Movie, Integer> {
 }

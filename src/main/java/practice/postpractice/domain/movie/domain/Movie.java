@@ -3,7 +3,9 @@ package practice.postpractice.domain.movie.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -37,8 +39,4 @@ public class Movie {
     private long id;
 
     private String title;
-    private long tId;
-
-    @OneToMany(mappedBy = "movie")
-    private Set<MovieGenre> movieGenres = new HashSet<>();
 }
