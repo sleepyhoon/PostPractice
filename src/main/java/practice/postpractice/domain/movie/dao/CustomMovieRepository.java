@@ -1,14 +1,14 @@
 package practice.postpractice.domain.movie.dao;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import practice.postpractice.domain.movie.domain.Movie;
+import practice.postpractice.domain.movie.dto.MovieQueryOption;
 
-import java.util.Optional;
+import java.util.List;
 
 /**
  * <br>package name   : practice.postpractice.domain.movie.dao
- * <br>file name      : MovieRepository
- * <br>date           : 2024-08-22
+ * <br>file name      : CustomMovieRepository
+ * <br>date           : 2024-08-23
  * <pre>
  * <span style="color: white;">[description]</span>
  *
@@ -23,9 +23,9 @@ import java.util.Optional;
  * =======================================================
  * DATE           AUTHOR               NOTE
  * -------------------------------------------------------
- * 2024-08-22        SeungHoon              init create
+ * 2024-08-23        SeungHoon              init create
  * </pre>
  */
-public interface MovieRepository extends JpaRepository<Movie, Integer>,CustomMovieRepository {
-    Optional<Movie> findById(Long id);
+public interface CustomMovieRepository {
+    List<Movie> searchMovies(MovieQueryOption queryOption);
 }

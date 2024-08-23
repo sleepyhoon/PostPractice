@@ -1,4 +1,4 @@
-package practice.postpractice.global.auth.config;
+package practice.postpractice.global.auth.jwt.component;
 
 import io.jsonwebtoken.ClaimJwtException;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
-import practice.postpractice.global.auth.jwt.component.JwtValidator;
 import practice.postpractice.global.exception.errorCode.ErrorCode;
 import practice.postpractice.global.exception.exception.NullJwtException;
 

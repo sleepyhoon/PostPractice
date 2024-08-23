@@ -1,7 +1,11 @@
 package practice.postpractice.domain.movie.domain;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import practice.postpractice.domain.movie.dto.CreateMovieDto;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -31,6 +35,7 @@ import java.util.Set;
  */
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Movie {
 
     @Id
@@ -39,4 +44,19 @@ public class Movie {
     private long id;
 
     private String title;
+    private String imgPath;
+
+    @Builder(access = AccessLevel.PRIVATE)
+    public Movie(String title, String imgPath) {
+        this.title = title;
+        this.imgPath = imgPath;
+    }
+
+    public static Movie create(CreateMovieDto dto) {
+        String imgPath = "/static/images";
+        return Movie.builder()
+                .title(dto.title())
+                .imgPath(imgPath)
+                .build();
+    }
 }

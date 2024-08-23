@@ -1,5 +1,11 @@
 package practice.postpractice.domain.movie.service;
 
+import practice.postpractice.domain.movie.dto.CreateMovieDto;
+import practice.postpractice.domain.movie.dto.MovieQueryOption;
+import practice.postpractice.domain.movie.dto.ResponseMovieDto;
+
+import java.util.List;
+
 /**
  * <br>package name   : practice.postpractice.domain.movie.service
  * <br>file name      : MovieService
@@ -22,4 +28,7 @@ package practice.postpractice.domain.movie.service;
  * </pre>
  */
 public interface MovieService {
+    Long createMovie(CreateMovieDto dto);
+    List<ResponseMovieDto> findMovies(MovieQueryOption queryOption);
+    List<ResponseMovieDto> getAllMovies();
 }

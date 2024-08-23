@@ -1,6 +1,16 @@
 package practice.postpractice.domain.movie.controller;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import practice.postpractice.domain.movie.dto.ResponseMovieDto;
+import practice.postpractice.domain.movie.service.MovieService;
+
+import java.util.List;
 
 /**
  * <br>package name   : practice.postpractice.domain.controller
@@ -23,6 +33,17 @@ import org.springframework.stereotype.Controller;
  * 2024-08-21        SeungHoon              init create
  * </pre>
  */
-@Controller
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/movies")
 public class MovieController {
+
+    private final MovieService movieService;
+
+    @GetMapping
+    public ResponseEntity<List<ResponseMovieDto>> findAllMovies() {
+        List<ResponseMovieDto> response = movieService.getAllMovies();
+        return ResponseEntity.ok(response);
+    }
 }
+
