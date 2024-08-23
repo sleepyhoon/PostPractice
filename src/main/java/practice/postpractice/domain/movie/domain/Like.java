@@ -1,6 +1,10 @@
 package practice.postpractice.domain.movie.domain;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import practice.postpractice.domain.BaseEntity;
 import practice.postpractice.domain.member.domain.Member;
 
@@ -29,6 +33,8 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "Likes")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Like extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,4 +48,14 @@ public class Like extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
     private Movie movie;
+
+    @Builder(access = AccessLevel.PRIVATE)
+    public Like(Member member, Movie movie) {
+        this.member = member;
+        this.movie = movie;
+    }
+
+    public static Like create(Member member, Movie movie) {
+        return Like.builder().member(member).movie(movie).build();
+    }
 }
