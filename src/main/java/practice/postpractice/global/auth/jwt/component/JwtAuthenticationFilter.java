@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.GenericFilterBean;
 import practice.postpractice.global.exception.errorCode.ErrorCode;
 import practice.postpractice.global.exception.exception.NullJwtException;
@@ -42,10 +43,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends GenericFilterBean {
     private final JwtValidator jwtValidator;
-
+    private final AntPathMatcher pathMatcher = new AntPathMatcher();
     private static final List<String> EXCLUDE_URLS = List.of(
             "/member/register",
-            "/member/login"
+            "/member/login",
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html"
     );
 
     private static final List<String> EXCLUDE_URL_PREFIXES = List.of(
@@ -94,9 +98,13 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     }
 
     private boolean isExclude(String url) {
-        if(EXCLUDE_URLS.contains(url)) {
-            return true;
+        // 정확한 매칭 확인
+        for (String pattern : EXCLUDE_URLS) {
+            if (pathMatcher.match(pattern, url)) {
+                return true;
+            }
         }
+        // 접두어 매칭 확인
         return EXCLUDE_URL_PREFIXES.stream().anyMatch(url::startsWith);
     }
 }
