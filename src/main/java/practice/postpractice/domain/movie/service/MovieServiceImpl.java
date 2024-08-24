@@ -68,4 +68,10 @@ public class MovieServiceImpl implements MovieService {
                 .map(ResponseMovieDto::from)
                 .toList();
     }
+
+    public ResponseMovieDto getMovie(Long movieId) {
+        Movie movie = movieRepository.findById(movieId).orElseThrow(() ->
+                new MovieManageException(ErrorCode.NOT_EXIST_MOVIE));
+        return ResponseMovieDto.from(movie);
+    }
 }

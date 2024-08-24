@@ -31,4 +31,5 @@ public interface MovieService {
     Long createMovie(CreateMovieDto dto);
     List<ResponseMovieDto> findMovies(MovieQueryOption queryOption);
     List<ResponseMovieDto> getAllMovies();
+    ResponseMovieDto getMovie(Long movieId);
 }

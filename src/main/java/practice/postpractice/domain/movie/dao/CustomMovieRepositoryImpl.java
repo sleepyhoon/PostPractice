@@ -44,8 +44,8 @@ public class CustomMovieRepositoryImpl implements CustomMovieRepository {
     public List<Movie> searchMovies(MovieQueryOption queryOption) {
         return queryFactory
                 .selectFrom(movie)
-                .leftJoin(movieGenre).on(movie.id.eq(movieGenre.id))
-                .leftJoin(genre).on(movie.id.eq(genre.id))
+                .leftJoin(movieGenre).on(movie.id.eq(movieGenre.movie.id))
+                .leftJoin(genre).on(movieGenre.genre.id.eq(genre.id))
                 .where(matchesQueryOption(queryOption))
                 .fetch();
     }

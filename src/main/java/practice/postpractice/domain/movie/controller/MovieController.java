@@ -4,9 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import practice.postpractice.domain.movie.dto.MovieQueryOption;
 import practice.postpractice.domain.movie.dto.ResponseMovieDto;
 import practice.postpractice.domain.movie.service.MovieService;
 
@@ -43,6 +42,18 @@ public class MovieController {
     @GetMapping
     public ResponseEntity<List<ResponseMovieDto>> findAllMovies() {
         List<ResponseMovieDto> response = movieService.getAllMovies();
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ResponseMovieDto>> findMovie(@RequestParam MovieQueryOption movieQueryOption) {
+        List<ResponseMovieDto> response = movieService.findMovies(movieQueryOption);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{movieId}")
+    public ResponseEntity<ResponseMovieDto> findMovie(@PathVariable Long movieId) {
+        ResponseMovieDto response = movieService.getMovie(movieId);
         return ResponseEntity.ok(response);
     }
 }
