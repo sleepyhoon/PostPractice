@@ -1,8 +1,6 @@
 package practice.postpractice.domain.movie.service;
 
-import practice.postpractice.domain.movie.domain.Like;
-import practice.postpractice.domain.movie.domain.Movie;
-import practice.postpractice.domain.movie.dto.ResponseMovieDto;
+import practice.postpractice.domain.movie.dto.MovieResponseDto;
 
 import java.util.List;
 
@@ -29,6 +27,7 @@ import java.util.List;
  */
 public interface LikeService {
     Long createLike(Long movieId, String username);
-    List<ResponseMovieDto> getMembersLikeMovies(String username);
+    List<MovieResponseDto> getMembersLikeMovies(String username);
+    int countLikes(Long movieId);
     void deleteLike(Long movieId, String username);
 }

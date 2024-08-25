@@ -1,4 +1,4 @@
-package practice.postpractice.domain.dto.response;
+package practice.postpractice.domain.movie.dto;
 
 /**
  * <br>package name   : practice.postpractice.domain.dto.response

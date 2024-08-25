@@ -8,14 +8,13 @@ import practice.postpractice.domain.movie.dao.LikeRepository;
 import practice.postpractice.domain.movie.dao.MovieRepository;
 import practice.postpractice.domain.movie.domain.Like;
 import practice.postpractice.domain.movie.domain.Movie;
-import practice.postpractice.domain.movie.dto.ResponseMovieDto;
+import practice.postpractice.domain.movie.dto.MovieResponseDto;
 import practice.postpractice.global.exception.errorCode.ErrorCode;
 import practice.postpractice.global.exception.exception.LikeManagementException;
 import practice.postpractice.global.exception.exception.MemberManageException;
 import practice.postpractice.global.exception.exception.MovieManageException;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * <br>package name   : practice.postpractice.domain.movie.service
@@ -60,7 +59,7 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public List<ResponseMovieDto> getMembersLikeMovies(String username) {
+    public List<MovieResponseDto> getMembersLikeMovies(String username) {
         Member member = memberRepository.findByUsername(username).orElseThrow(
                 () -> new MemberManageException(ErrorCode.NOT_EXIST_MEMBER));
         Long memberId = member.getId();
@@ -73,7 +72,7 @@ public class LikeServiceImpl implements LikeService {
                 .map(Like::getMovie)
                 .toList();
         return movies.stream()
-                .map(ResponseMovieDto::from)
+                .map(MovieResponseDto::from)
                 .toList();
     }
 
@@ -84,5 +83,10 @@ public class LikeServiceImpl implements LikeService {
         Like like = likeRepository.findByMovieIdAndMemberId(movieId, member.getId()).orElseThrow(()->
                 new LikeManagementException(ErrorCode.NOT_EXIST_LIKE));
         likeRepository.delete(like);
+    }
+
+    @Override
+    public int countLikes(Long movieId) {
+        return likeRepository.countByMovieId(movieId);
     }
 }

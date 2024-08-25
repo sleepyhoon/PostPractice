@@ -7,9 +7,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import practice.postpractice.domain.dto.response.LikeResponseDto;
+import practice.postpractice.domain.movie.dto.LikeCountResponseDto;
+import practice.postpractice.domain.movie.dto.LikeResponseDto;
 import practice.postpractice.domain.dto.response.SuccessResponseDto;
-import practice.postpractice.domain.member.domain.Member;
 import practice.postpractice.domain.movie.service.LikeService;
 import practice.postpractice.global.utils.SecurityUtil;
 
@@ -58,6 +58,15 @@ public class LikeController {
         String username = SecurityUtil.getCurrentUsername();
         likeService.deleteLike(movieId, username); // 수정된 메소드로 영화 ID와 사용자명을 사용
         SuccessResponseDto response = SuccessResponseDto.from("좋아요를 취소했습니다");
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    @Operation(summary = "좋아요 개수 구하기", description = "해당 영화에 대한 좋아요 개수 조회")
+    @ApiResponse(responseCode = "200",description = "요청에 성공하였습니다",content = @Content(mediaType = "application/json"))
+    public ResponseEntity<LikeCountResponseDto> getLikeCount(@PathVariable Long movieId) {
+        int count = likeService.countLikes(movieId);
+        LikeCountResponseDto response = LikeCountResponseDto.of(count);
         return ResponseEntity.ok(response);
     }
 }
