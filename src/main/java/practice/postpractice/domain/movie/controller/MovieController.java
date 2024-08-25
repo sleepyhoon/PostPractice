@@ -1,5 +1,9 @@
 package practice.postpractice.domain.movie.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -35,23 +39,30 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/movies")
+@Tag(name = "Movie Management",description = "Movie API")
 public class MovieController {
 
     private final MovieService movieService;
 
     @GetMapping
+    @Operation(summary = "모든 영화 조회", description = "필터링 없이 모든 영화 조회 API")
+    @ApiResponse(responseCode = "1000",description = "요청에 성공하였습니다",content = @Content(mediaType = "application/json"))
     public ResponseEntity<List<ResponseMovieDto>> findAllMovies() {
         List<ResponseMovieDto> response = movieService.getAllMovies();
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/search")
+    @Operation(summary = "필터링 영화 조회", description = "필터링해서 영화 조회 API")
+    @ApiResponse(responseCode = "1000",description = "요청에 성공하였습니다",content = @Content(mediaType = "application/json"))
     public ResponseEntity<List<ResponseMovieDto>> findMovie(@RequestParam MovieQueryOption movieQueryOption) {
         List<ResponseMovieDto> response = movieService.findMovies(movieQueryOption);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{movieId}")
+    @Operation(summary = "id로 영화 조회", description = "특정 영화 클릭시 조회 API")
+    @ApiResponse(responseCode = "1000",description = "요청에 성공하였습니다",content = @Content(mediaType = "application/json"))
     public ResponseEntity<ResponseMovieDto> findMovie(@PathVariable Long movieId) {
         ResponseMovieDto response = movieService.getMovie(movieId);
         return ResponseEntity.ok(response);

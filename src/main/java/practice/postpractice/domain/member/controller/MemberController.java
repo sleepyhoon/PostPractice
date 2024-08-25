@@ -1,5 +1,9 @@
 package practice.postpractice.domain.member.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,18 +43,23 @@ import practice.postpractice.global.auth.jwt.service.RefreshTokenService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/member")
+@Tag(name = "Member Management",description = "Member API")
 public class MemberController {
     private final SignInService signInService;
     private final MemberService memberService;
     private final RefreshTokenService refreshTokenService;
 
     @PostMapping("/register")
+    @Operation(summary = "멤버 회원가입", description = "회원 가입할 때 사용하는 API")
+    @ApiResponse(responseCode = "1000",description = "요청에 성공하였습니다",content = @Content(mediaType = "application/json"))
     public ResponseEntity<Long> register(@RequestBody CreateMemberDto dto) {
         Long id = memberService.register(dto);
         return ResponseEntity.ok(id);
     }
 
     @PostMapping("/login")
+    @Operation(summary = "멤버 로그인", description = "로그인할 때 사용하는 API")
+    @ApiResponse(responseCode = "1000",description = "요청에 성공하였습니다",content = @Content(mediaType = "application/json"))
     public ResponseEntity<JwtToken> signIn(@RequestBody SignInRequestDto dto) {
         JwtToken jwtToken = signInService.SignIn(dto);
         RefreshToken refreshToken = new RefreshToken(dto.username(), jwtToken.getRefreshToken());
