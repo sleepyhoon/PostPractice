@@ -51,7 +51,7 @@ public class Member implements UserDetails {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
-    private List<String> roles = new ArrayList<>();
+    private List<String> roles = new ArrayList<>(List.of("ROLE_GUEST"));
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
