@@ -78,10 +78,11 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public void deleteLike(Long likeId) {
-        if(likeRepository.existsById(likeId)) {
-            throw new LikeManagementException(ErrorCode.NOT_EXIST_LIKE);
-        }
-        likeRepository.deleteById(likeId);
+    public void deleteLike(Long movieId, String username) {
+        Member member = memberRepository.findByUsername(username).orElseThrow(()->
+                new MemberManageException(ErrorCode.NOT_EXIST_MEMBER));
+        Like like = likeRepository.findByMovieIdAndMemberId(movieId, member.getId()).orElseThrow(()->
+                new LikeManagementException(ErrorCode.NOT_EXIST_LIKE));
+        likeRepository.delete(like);
     }
 }

@@ -49,7 +49,7 @@ public class MovieController {
 
     @GetMapping
     @Operation(summary = "모든 영화 조회", description = "필터링 없이 모든 영화 조회 API")
-    @ApiResponse(responseCode = "1000",description = "요청에 성공하였습니다",content = @Content(mediaType = "application/json"))
+    @ApiResponse(responseCode = "200",description = "요청에 성공하였습니다",content = @Content(mediaType = "application/json"))
     public ResponseEntity<List<ResponseMovieDto>> findAllMovies() {
         List<ResponseMovieDto> response = movieService.getAllMovies();
         return ResponseEntity.ok(response);
@@ -57,7 +57,7 @@ public class MovieController {
 
     @GetMapping("/search")
     @Operation(summary = "필터링 영화 조회", description = "필터링해서 영화 조회 API")
-    @ApiResponse(responseCode = "1000",description = "요청에 성공하였습니다",content = @Content(mediaType = "application/json"))
+    @ApiResponse(responseCode = "200",description = "요청에 성공하였습니다",content = @Content(mediaType = "application/json"))
     public ResponseEntity<List<ResponseMovieDto>> findMovie(@RequestParam MovieQueryOption movieQueryOption) {
         List<ResponseMovieDto> response = movieService.findMovies(movieQueryOption);
         return ResponseEntity.ok(response);
@@ -65,7 +65,7 @@ public class MovieController {
 
     @GetMapping("/{movieId}")
     @Operation(summary = "id로 영화 조회", description = "특정 영화 클릭시 조회 API")
-    @ApiResponse(responseCode = "1000",description = "요청에 성공하였습니다",content = @Content(mediaType = "application/json"))
+    @ApiResponse(responseCode = "200",description = "요청에 성공하였습니다",content = @Content(mediaType = "application/json"))
     public ResponseEntity<ResponseMovieDto> findMovie(@PathVariable Long movieId) {
         ResponseMovieDto response = movieService.getMovie(movieId);
         return ResponseEntity.ok(response);
@@ -73,7 +73,7 @@ public class MovieController {
 
     @GetMapping("/member/likes")
     @Operation(summary = "좋아요 누른 영화 조회",description = "로그인한 멤버가 좋아요 한 영화 조회 API")
-    @ApiResponse(responseCode = "1000",description = "요청에 성공하였습니다",content = @Content(mediaType = "application/json"))
+    @ApiResponse(responseCode = "200",description = "요청에 성공하였습니다",content = @Content(mediaType = "application/json"))
     public ResponseEntity<List<ResponseMovieDto>> findMovieLikes() {
         String username = SecurityUtil.getCurrentUsername();
         List<ResponseMovieDto> response = likeService.getMembersLikeMovies(username);
