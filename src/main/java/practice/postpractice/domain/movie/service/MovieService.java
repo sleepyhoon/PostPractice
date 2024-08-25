@@ -2,7 +2,7 @@ package practice.postpractice.domain.movie.service;
 
 import practice.postpractice.domain.movie.dto.CreateMovieDto;
 import practice.postpractice.domain.movie.dto.MovieQueryOption;
-import practice.postpractice.domain.movie.dto.ResponseMovieDto;
+import practice.postpractice.domain.movie.dto.MovieResponseDto;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ import java.util.List;
  */
 public interface MovieService {
     Long createMovie(CreateMovieDto dto);
-    List<ResponseMovieDto> findMovies(MovieQueryOption queryOption);
-    List<ResponseMovieDto> getAllMovies();
-    ResponseMovieDto getMovie(Long movieId);
+    List<MovieResponseDto> findMovies(MovieQueryOption queryOption);
+    List<MovieResponseDto> getAllMovies();
+    MovieResponseDto getMovie(Long movieId);
 }

@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import practice.postpractice.domain.member.dto.CreateMemberDto;
+import practice.postpractice.domain.member.dto.RegisterResponseDto;
 import practice.postpractice.domain.member.dto.SignInRequestDto;
 import practice.postpractice.domain.member.service.MemberService;
 import practice.postpractice.domain.member.service.MemberServiceImpl;
 import practice.postpractice.domain.member.service.SignInService;
+import practice.postpractice.domain.movie.dto.LikeCountResponseDto;
 import practice.postpractice.global.auth.jwt.domain.JwtToken;
 import practice.postpractice.global.auth.jwt.domain.RefreshToken;
 import practice.postpractice.global.auth.jwt.service.RefreshTokenService;
@@ -52,9 +54,10 @@ public class MemberController {
     @PostMapping("/register")
     @Operation(summary = "멤버 회원가입", description = "회원 가입할 때 사용하는 API")
     @ApiResponse(responseCode = "1000",description = "요청에 성공하였습니다",content = @Content(mediaType = "application/json"))
-    public ResponseEntity<Long> register(@RequestBody CreateMemberDto dto) {
+    public ResponseEntity<RegisterResponseDto> register(@RequestBody CreateMemberDto dto) {
         Long id = memberService.register(dto);
-        return ResponseEntity.ok(id);
+        RegisterResponseDto response = RegisterResponseDto.of(id,"회원 가입에 성공했습니다");
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/login")

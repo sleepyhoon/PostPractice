@@ -23,11 +23,11 @@ import practice.postpractice.domain.movie.domain.Movie;
  * 2024-08-23        SeungHoon              init create
  * </pre>
  */
-public record ResponseMovieDto(
+public record MovieResponseDto (
         String title,
         String imgPath
 ) {
-    public static ResponseMovieDto from(Movie movie) {
-        return new ResponseMovieDto(movie.getTitle(), movie.getImgPath());
+    public static MovieResponseDto from(Movie movie) {
+        return new MovieResponseDto(movie.getTitle(), movie.getImgPath());
     }
 }
