@@ -11,7 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import practice.postpractice.domain.movie.dto.MovieQueryOption;
 import practice.postpractice.domain.movie.dto.ResponseMovieDto;
+import practice.postpractice.domain.movie.service.LikeService;
 import practice.postpractice.domain.movie.service.MovieService;
+import practice.postpractice.global.utils.SecurityUtil;
 
 import java.util.List;
 
@@ -43,6 +45,7 @@ import java.util.List;
 public class MovieController {
 
     private final MovieService movieService;
+    private final LikeService likeService;
 
     @GetMapping
     @Operation(summary = "모든 영화 조회", description = "필터링 없이 모든 영화 조회 API")
@@ -65,6 +68,15 @@ public class MovieController {
     @ApiResponse(responseCode = "1000",description = "요청에 성공하였습니다",content = @Content(mediaType = "application/json"))
     public ResponseEntity<ResponseMovieDto> findMovie(@PathVariable Long movieId) {
         ResponseMovieDto response = movieService.getMovie(movieId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/member/likes")
+    @Operation(summary = "좋아요 누른 영화 조회",description = "로그인한 멤버가 좋아요 한 영화 조회 API")
+    @ApiResponse(responseCode = "1000",description = "요청에 성공하였습니다",content = @Content(mediaType = "application/json"))
+    public ResponseEntity<List<ResponseMovieDto>> findMovieLikes() {
+        String username = SecurityUtil.getCurrentUsername();
+        List<ResponseMovieDto> response = likeService.getMembersLikeMovies(username);
         return ResponseEntity.ok(response);
     }
 }

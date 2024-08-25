@@ -46,13 +46,13 @@ public enum ErrorCode {
     JWT_NULL(HttpStatus.UNAUTHORIZED,"인증 토큰이 없습니다."),
 
     // movie
-    DUPLICATE_MOVIE(HttpStatus.CONFLICT, "중복된 id를 가진 영화입니다."),
-    NOT_EXIST_MOVIE(HttpStatus.NOT_FOUND,"해당 id를 가진 영화가 없습니다."),
+    DUPLICATE_MOVIE(HttpStatus.CONFLICT, "중복된 영화입니다."),
+    NOT_EXIST_MOVIE(HttpStatus.NOT_FOUND,"해당 영화가 없습니다."),
 
 
     // like
     DUPLICATE_LIKE(HttpStatus.CONFLICT,"이미 좋아요를 눌렀습니다."),
-
+    NOT_EXIST_LIKE(HttpStatus.NOT_FOUND,"좋아요 누른 영화가 없습니다."),
 
     // 기타
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 에러입니다."),

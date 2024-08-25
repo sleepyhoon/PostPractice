@@ -8,10 +8,14 @@ import practice.postpractice.domain.movie.dao.LikeRepository;
 import practice.postpractice.domain.movie.dao.MovieRepository;
 import practice.postpractice.domain.movie.domain.Like;
 import practice.postpractice.domain.movie.domain.Movie;
+import practice.postpractice.domain.movie.dto.ResponseMovieDto;
 import practice.postpractice.global.exception.errorCode.ErrorCode;
 import practice.postpractice.global.exception.exception.LikeManagementException;
 import practice.postpractice.global.exception.exception.MemberManageException;
 import practice.postpractice.global.exception.exception.MovieManageException;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <br>package name   : practice.postpractice.domain.movie.service
@@ -43,8 +47,8 @@ public class LikeServiceImpl implements LikeService {
     private final LikeRepository likeRepository;
 
     @Override
-    public Long createLike(Long movieId, Long memberId) {
-        Member member = memberRepository.findById(memberId).orElseThrow(
+    public Long createLike(Long movieId, String username) {
+        Member member = memberRepository.findByUsername(username).orElseThrow(
                 () -> new MemberManageException(ErrorCode.NOT_EXIST_MEMBER));
         Movie movie = movieRepository.findById(movieId).orElseThrow(() ->
                 new MovieManageException(ErrorCode.NOT_EXIST_MOVIE));
@@ -53,5 +57,31 @@ public class LikeServiceImpl implements LikeService {
         }
         Like like = Like.create(member,movie);
         return likeRepository.save(like).getId();
+    }
+
+    @Override
+    public List<ResponseMovieDto> getMembersLikeMovies(String username) {
+        Member member = memberRepository.findByUsername(username).orElseThrow(
+                () -> new MemberManageException(ErrorCode.NOT_EXIST_MEMBER));
+        Long memberId = member.getId();
+
+        List<Like> likes = likeRepository.findByMemberId(memberId);
+        if(likes.isEmpty()) {
+            throw new LikeManagementException(ErrorCode.NOT_EXIST_LIKE);
+        }
+        List<Movie> movies = likes.stream()
+                .map(Like::getMovie)
+                .toList();
+        return movies.stream()
+                .map(ResponseMovieDto::from)
+                .toList();
+    }
+
+    @Override
+    public void deleteLike(Long likeId) {
+        if(likeRepository.existsById(likeId)) {
+            throw new LikeManagementException(ErrorCode.NOT_EXIST_LIKE);
+        }
+        likeRepository.deleteById(likeId);
     }
 }

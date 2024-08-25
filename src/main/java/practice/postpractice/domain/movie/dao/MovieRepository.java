@@ -28,4 +28,5 @@ import java.util.Optional;
  */
 public interface MovieRepository extends JpaRepository<Movie, Integer>,CustomMovieRepository {
     Optional<Movie> findById(Long id);
+    boolean existsById(Long id);
 }

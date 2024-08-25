@@ -5,6 +5,8 @@ import practice.postpractice.domain.member.domain.Member;
 import practice.postpractice.domain.movie.domain.Like;
 import practice.postpractice.domain.movie.domain.Movie;
 
+import java.util.List;
+
 /**
  * <br>package name   : practice.postpractice.domain.movie.dao
  * <br>file name      : Likerepository
@@ -28,4 +30,5 @@ import practice.postpractice.domain.movie.domain.Movie;
  */
 public interface LikeRepository extends JpaRepository<Like, Long> {
     boolean existsByMemberAndMovie(Member member, Movie movie);
+    List<Like> findByMemberId(Long memberId);
 }
