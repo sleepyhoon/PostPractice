@@ -7,6 +7,7 @@ import practice.postpractice.domain.movie.dto.CreateMovieDto;
 import practice.postpractice.domain.movie.dto.MovieQueryOption;
 import practice.postpractice.domain.movie.dto.MovieResponseDto;
 
+import java.io.IOException;
 import java.util.List;
 
 /**

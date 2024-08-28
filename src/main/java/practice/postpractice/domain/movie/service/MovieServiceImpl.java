@@ -1,6 +1,7 @@
 package practice.postpractice.domain.movie.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -17,7 +18,12 @@ import practice.postpractice.global.exception.exception.MovieManageException;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * <br>package name   : practice.postpractice.domain.service
@@ -42,21 +48,31 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MovieServiceImpl implements MovieService {
     private final MovieRepository movieRepository;
 
-    @Value("${image.upload.dir}")
-    private String uploadDir;
+    private static final String UPLOAD_DIR = "uploads/";
 
     @Override
     public Long createMovie(CreateMovieDto dto, MultipartFile file) {
-        String imgPath = saveFile(file, dto);
-        Movie movie = Movie.create(dto,imgPath);
+        String imgPath;
         try {
+            // 파일 저장
+            imgPath = saveFile(file);
+            // 영화 엔티티 생성 및 저장
+            Movie movie = Movie.create(dto, imgPath);
             movieRepository.save(movie);
+            // 성공 시 영화 ID 반환
             return movie.getId();
+
         } catch (DataIntegrityViolationException e) {
+            // 데이터베이스 중복 저장 시 예외 처리
             throw new MovieManageException(ErrorCode.DUPLICATE_MOVIE);
+
+        } catch (Exception e) {
+            // 그 외 예외 처리
+            throw new MovieManageException(ErrorCode.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -79,28 +95,39 @@ public class MovieServiceImpl implements MovieService {
         return MovieResponseDto.from(movie);
     }
 
-    public String saveFile(MultipartFile file, CreateMovieDto dto) {
-        if (file == null || file.isEmpty()) {
-            // 파일이 없거나 비어있는 경우 예외 던지기
-            throw new MovieManageException(ErrorCode.INVALID_FILE);
-        }
-
-        String filename = "movie_" + dto.title() + "_" + file.getOriginalFilename();
-        File destinationFile = new File(uploadDir + File.separator + filename);
+    private String saveFile(MultipartFile file) {
+        String originalFilename = file.getOriginalFilename();
+        String uniqueFilename;
+        Path filePath;
 
         try {
-            // 필요한 경우 디렉토리 생성
-            destinationFile.getParentFile().mkdirs();
+            // 1. 원본 파일명 가져오기
+            if (originalFilename == null) {
+                throw new IOException("파일 이름이 존재하지 않습니다.");
+            }
 
-            // 파일 저장
-            file.transferTo(destinationFile);
+            // 2. 고유한 파일명 생성 (UUID + 원본 파일 확장자)
+            String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+            uniqueFilename = UUID.randomUUID() + extension;
 
-            // 저장된 파일 경로 반환
-            return "/static/images/" + filename;
+            // 3. 파일 저장 경로 생성
+            Path uploadPath = Paths.get(UPLOAD_DIR);
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
 
+            // 4. 파일 저장
+            filePath = uploadPath.resolve(uniqueFilename);
+            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            // 파일 저장 중 오류가 발생하면 예외를 던짐
-            throw new RuntimeException("Failed to save file", e);
+            log.error("파일 저장 중 오류 발생: {}", e.getMessage(), e);
+            throw new RuntimeException("파일 저장 실패", e);
+        } catch (Exception e) {
+            log.error("예상치 못한 오류 발생: {}", e.getMessage(), e);
+            throw new RuntimeException("파일 처리 중 예상치 못한 오류가 발생했습니다.", e);
         }
+
+        // 5. 저장된 파일 경로 반환
+        return filePath.toString();
     }
 }

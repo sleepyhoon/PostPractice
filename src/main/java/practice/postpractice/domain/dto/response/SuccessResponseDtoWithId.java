@@ -25,4 +25,7 @@ public record SuccessResponseDtoWithId(
         Long id,
         String message
 ) {
+    public static SuccessResponseDtoWithId of(Long id, String message) {
+        return new SuccessResponseDtoWithId(id, message);
+    }
 }

@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
@@ -19,6 +20,8 @@ import practice.postpractice.domain.movie.dto.PageMovieResponseDto;
 import practice.postpractice.domain.movie.service.LikeService;
 import practice.postpractice.domain.movie.service.MovieService;
 import practice.postpractice.global.utils.SecurityUtil;
+
+import java.io.IOException;
 
 /**
  * <br>package name   : practice.postpractice.domain.controller
@@ -45,6 +48,7 @@ import practice.postpractice.global.utils.SecurityUtil;
 @RequiredArgsConstructor
 @RequestMapping("/movies")
 @Tag(name = "Movie Management",description = "Movie API")
+@Slf4j
 public class MovieController {
 
     private final MovieService movieService;
@@ -53,10 +57,11 @@ public class MovieController {
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @Operation(summary = "영화 등록하기", description = "유저가 원하는 영화 등록 API")
     @ApiResponse(responseCode = "200",description = "요청에 성공하였습니다",content = @Content(mediaType = "application/json"))
-    public ResponseEntity<SuccessResponseDtoWithId> createMovie(@RequestPart CreateMovieDto dto,
-                                                                @RequestPart MultipartFile file){
+    public ResponseEntity<SuccessResponseDtoWithId> createMovie(@RequestPart(value = "movie") CreateMovieDto dto,
+                                                                @RequestPart(value = "image") MultipartFile file) {
         Long id = movieService.createMovie(dto,file);
-        return ResponseEntity.ok(new SuccessResponseDtoWithId(id,"영화 등록 완료!"));
+        SuccessResponseDtoWithId response = SuccessResponseDtoWithId.of(id,"영화 등록 완료!");
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
