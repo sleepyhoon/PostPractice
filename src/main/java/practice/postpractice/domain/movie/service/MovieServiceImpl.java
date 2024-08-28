@@ -23,6 +23,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -95,6 +96,19 @@ public class MovieServiceImpl implements MovieService {
         return MovieResponseDto.from(movie);
     }
 
+    @Override
+    public void deleteMovie(Long movieId) {
+        Movie movie = movieRepository.findById(movieId).orElseThrow(
+                ()-> new MovieManageException(ErrorCode.NOT_EXIST_MOVIE));
+        String imgPath = movie.getImgPath();
+        // 1. 이미지 파일 삭제
+        if (imgPath != null && !imgPath.isEmpty()) {
+            deleteFile(imgPath);
+        }
+        // 2. 영화 데이터베이스에서 삭제
+        movieRepository.delete(movie);
+    }
+
     private String saveFile(MultipartFile file) {
         String originalFilename = file.getOriginalFilename();
         String uniqueFilename;
@@ -129,5 +143,16 @@ public class MovieServiceImpl implements MovieService {
 
         // 5. 저장된 파일 경로 반환
         return filePath.toString();
+    }
+
+    private void deleteFile(String filePath) {
+        try {
+            Path path = Paths.get(filePath);
+            Files.deleteIfExists(path);
+            log.info("파일 삭제 성공: {}", filePath);
+        } catch (IOException e) {
+            log.error("파일 삭제 중 오류 발생: {}", e.getMessage(), e);
+            throw new RuntimeException("파일 삭제 실패", e);
+        }
     }
 }

@@ -36,4 +36,5 @@ public interface MovieService {
     Page<MovieResponseDto> findMovies(MovieQueryOption queryOption,Pageable pageable);
     Page<MovieResponseDto> getAllMovies(Pageable pageable);
     MovieResponseDto getMovie(Long movieId);
+    void deleteMovie(Long movieId);
 }

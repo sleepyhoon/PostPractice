@@ -13,7 +13,10 @@ import java.lang.reflect.Type;
  * <br>date           : 2024-08-28
  * <pre>
  * <span style="color: white;">[description]</span>
+ * <h3>Swagger에서 @ReqeustPart를 사용하여 MultiPartFile과 DTO 처리 시 Content type 'application/octet-stream' not supported 오류 해결</h3>
+ *해당 클래스에서는 HTTP 응답 출력을 지원하지 않도록 canWrite() 메서드들을 오버라이드하여 모두 false를 반환하도록 설정되어 있습니다. 이로 인해 이 메시지 컨버터는 주로 HTTP 요청 데이터를 객체로 변환하는 데 사용됩니다.
  *
+ * 위 코드를 Spring 프로젝트에 추가하고 @Component 어노테이션을 통해 빈으로 등록하면 Spring 컨텍스트에서 이 클래스의 인스턴스가 생성되어 관리됩니다.
  * </pre>
  * <pre>
  * <span style="color: white;">usage:</span>

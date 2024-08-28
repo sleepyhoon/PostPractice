@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import practice.postpractice.domain.dto.response.SuccessResponseDto;
 import practice.postpractice.domain.dto.response.SuccessResponseDtoWithId;
 import practice.postpractice.domain.movie.dto.CreateMovieDto;
 import practice.postpractice.domain.movie.dto.MovieQueryOption;
@@ -20,9 +21,6 @@ import practice.postpractice.domain.movie.dto.PageMovieResponseDto;
 import practice.postpractice.domain.movie.service.LikeService;
 import practice.postpractice.domain.movie.service.MovieService;
 import practice.postpractice.global.utils.SecurityUtil;
-
-import java.io.IOException;
-
 /**
  * <br>package name   : practice.postpractice.domain.controller
  * <br>file name      : MovieController
@@ -98,6 +96,14 @@ public class MovieController {
         Page<MovieResponseDto> movies = likeService.getMembersLikeMovies(username,pageable);
         PageMovieResponseDto response = PageMovieResponseDto.from(movies);
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{movieId}")
+    @Operation(summary = "영화 삭제",description = "특정 id를 가진 영화를 지우는 API")
+    @ApiResponse(responseCode = "200",description = "요청에 성공하였습니다",content = @Content(mediaType = "application/json"))
+    public ResponseEntity<SuccessResponseDto> deleteMovie(@PathVariable Long movieId) {
+        movieService.deleteMovie(movieId);
+        return ResponseEntity.ok(new SuccessResponseDto("영화 삭제 성공!"));
     }
 }
 
