@@ -1,6 +1,8 @@
 package practice.postpractice.domain.movie.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import practice.postpractice.domain.member.dao.MemberRepository;
 import practice.postpractice.domain.member.domain.Member;
@@ -59,21 +61,17 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public List<MovieResponseDto> getMembersLikeMovies(String username) {
+    public Page<MovieResponseDto> getMembersLikeMovies(String username, Pageable pageable) {
         Member member = memberRepository.findByUsername(username).orElseThrow(
                 () -> new MemberManageException(ErrorCode.NOT_EXIST_MEMBER));
         Long memberId = member.getId();
 
-        List<Like> likes = likeRepository.findByMemberId(memberId);
-        if(likes.isEmpty()) {
+        if(!likeRepository.existsByMemberId(memberId)) {
             throw new LikeManagementException(ErrorCode.NOT_EXIST_LIKE);
         }
-        List<Movie> movies = likes.stream()
-                .map(Like::getMovie)
-                .toList();
-        return movies.stream()
-                .map(MovieResponseDto::from)
-                .toList();
+        Page<Like> likes = likeRepository.findByMemberId(memberId,pageable);
+        Page<Movie> movies = likes.map(Like::getMovie);
+        return movies.map(MovieResponseDto::from);
     }
 
     @Override

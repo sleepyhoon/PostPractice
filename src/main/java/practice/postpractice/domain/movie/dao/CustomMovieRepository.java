@@ -1,5 +1,7 @@
 package practice.postpractice.domain.movie.dao;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import practice.postpractice.domain.movie.domain.Movie;
 import practice.postpractice.domain.movie.dto.MovieQueryOption;
 
@@ -27,5 +29,5 @@ import java.util.List;
  * </pre>
  */
 public interface CustomMovieRepository {
-    List<Movie> searchMovies(MovieQueryOption queryOption);
+    Page<Movie> searchMovies(MovieQueryOption queryOption, Pageable pageable);
 }

@@ -1,5 +1,7 @@
 package practice.postpractice.domain.movie.dao;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -33,7 +35,8 @@ import java.util.Optional;
  */
 public interface LikeRepository extends JpaRepository<Like, Long> {
     boolean existsByMemberAndMovie(Member member, Movie movie);
-    List<Like> findByMemberId(Long memberId);
+    boolean existsByMemberId(Long memberId);
+    Page<Like> findByMemberId(Long memberId, Pageable pageable);
     Optional<Like> findByMovieIdAndMemberId(long movieId, long memberId);
 
     // 특정 movieId를 가진 좋아요 개수를 반환하는 메서드
