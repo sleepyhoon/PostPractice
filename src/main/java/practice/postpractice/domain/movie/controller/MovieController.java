@@ -5,15 +5,20 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import practice.postpractice.domain.dto.response.SuccessResponseDtoWithId;
+import practice.postpractice.domain.movie.dto.CreateMovieDto;
 import practice.postpractice.domain.movie.dto.MovieQueryOption;
 import practice.postpractice.domain.movie.dto.MovieResponseDto;
+import practice.postpractice.domain.movie.dto.PageMovieResponseDto;
 import practice.postpractice.domain.movie.service.LikeService;
 import practice.postpractice.domain.movie.service.MovieService;
 import practice.postpractice.global.utils.SecurityUtil;
-
-import java.util.List;
 
 /**
  * <br>package name   : practice.postpractice.domain.controller
@@ -45,19 +50,30 @@ public class MovieController {
     private final MovieService movieService;
     private final LikeService likeService;
 
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @Operation(summary = "영화 등록하기", description = "유저가 원하는 영화 등록 API")
+    @ApiResponse(responseCode = "200",description = "요청에 성공하였습니다",content = @Content(mediaType = "application/json"))
+    public ResponseEntity<SuccessResponseDtoWithId> createMovie(@RequestPart CreateMovieDto dto,
+                                                                @RequestPart MultipartFile file){
+        Long id = movieService.createMovie(dto,file);
+        return ResponseEntity.ok(new SuccessResponseDtoWithId(id,"영화 등록 완료!"));
+    }
+
     @GetMapping
     @Operation(summary = "모든 영화 조회", description = "필터링 없이 모든 영화 조회 API")
     @ApiResponse(responseCode = "200",description = "요청에 성공하였습니다",content = @Content(mediaType = "application/json"))
-    public ResponseEntity<List<MovieResponseDto>> findAllMovies() {
-        List<MovieResponseDto> response = movieService.getAllMovies();
+    public ResponseEntity<PageMovieResponseDto> findAllMovies(Pageable pageable) {
+        Page<MovieResponseDto> movies = movieService.getAllMovies(pageable);
+        PageMovieResponseDto response = PageMovieResponseDto.from(movies);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/search")
     @Operation(summary = "필터링 영화 조회", description = "필터링해서 영화 조회 API")
     @ApiResponse(responseCode = "200",description = "요청에 성공하였습니다",content = @Content(mediaType = "application/json"))
-    public ResponseEntity<List<MovieResponseDto>> findMovie(@RequestParam MovieQueryOption movieQueryOption) {
-        List<MovieResponseDto> response = movieService.findMovies(movieQueryOption);
+    public ResponseEntity<PageMovieResponseDto> findMovie(@RequestParam MovieQueryOption movieQueryOption,Pageable pageable) {
+        Page<MovieResponseDto> movies = movieService.findMovies(movieQueryOption,pageable);
+        PageMovieResponseDto response = PageMovieResponseDto.from(movies);
         return ResponseEntity.ok(response);
     }
 
@@ -72,9 +88,10 @@ public class MovieController {
     @GetMapping("/member/likes")
     @Operation(summary = "좋아요 누른 영화 조회",description = "로그인한 멤버가 좋아요 한 영화 조회 API")
     @ApiResponse(responseCode = "200",description = "요청에 성공하였습니다",content = @Content(mediaType = "application/json"))
-    public ResponseEntity<List<MovieResponseDto>> findMovieLikes() {
+    public ResponseEntity<PageMovieResponseDto> findMovieLikes(Pageable pageable) {
         String username = SecurityUtil.getCurrentUsername();
-        List<MovieResponseDto> response = likeService.getMembersLikeMovies(username);
+        Page<MovieResponseDto> movies = likeService.getMembersLikeMovies(username,pageable);
+        PageMovieResponseDto response = PageMovieResponseDto.from(movies);
         return ResponseEntity.ok(response);
     }
 }

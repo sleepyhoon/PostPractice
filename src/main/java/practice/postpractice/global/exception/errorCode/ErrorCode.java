@@ -48,7 +48,8 @@ public enum ErrorCode {
     // movie
     DUPLICATE_MOVIE(HttpStatus.CONFLICT, "중복된 영화입니다."),
     NOT_EXIST_MOVIE(HttpStatus.NOT_FOUND,"해당 영화가 없습니다."),
-
+    FILE_SAVE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR,"파일 저장에 실패했습니다"),
+    INVALID_FILE(HttpStatus.BAD_REQUEST,"잘못된 파일 형식입니다"),
 
     // like
     DUPLICATE_LIKE(HttpStatus.CONFLICT,"이미 좋아요를 눌렀습니다."),

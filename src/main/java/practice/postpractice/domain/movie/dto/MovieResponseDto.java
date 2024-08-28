@@ -2,6 +2,8 @@ package practice.postpractice.domain.movie.dto;
 
 import practice.postpractice.domain.movie.domain.Movie;
 
+import java.time.LocalDateTime;
+
 /**
  * <br>package name   : practice.postpractice.domain.movie.dto
  * <br>file name      : ResponseMovieDto
@@ -25,9 +27,10 @@ import practice.postpractice.domain.movie.domain.Movie;
  */
 public record MovieResponseDto (
         String title,
-        String imgPath
+        String imgPath,
+        LocalDateTime createdAt
 ) {
     public static MovieResponseDto from(Movie movie) {
-        return new MovieResponseDto(movie.getTitle(), movie.getImgPath());
+        return new MovieResponseDto(movie.getTitle(), movie.getImgPath(),movie.getCreatedAt());
     }
 }

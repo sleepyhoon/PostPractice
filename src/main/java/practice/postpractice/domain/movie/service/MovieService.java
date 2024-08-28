@@ -1,5 +1,8 @@
 package practice.postpractice.domain.movie.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 import practice.postpractice.domain.movie.dto.CreateMovieDto;
 import practice.postpractice.domain.movie.dto.MovieQueryOption;
 import practice.postpractice.domain.movie.dto.MovieResponseDto;
@@ -28,8 +31,8 @@ import java.util.List;
  * </pre>
  */
 public interface MovieService {
-    Long createMovie(CreateMovieDto dto);
-    List<MovieResponseDto> findMovies(MovieQueryOption queryOption);
-    List<MovieResponseDto> getAllMovies();
+    Long createMovie(CreateMovieDto dto, MultipartFile file);
+    Page<MovieResponseDto> findMovies(MovieQueryOption queryOption,Pageable pageable);
+    Page<MovieResponseDto> getAllMovies(Pageable pageable);
     MovieResponseDto getMovie(Long movieId);
 }

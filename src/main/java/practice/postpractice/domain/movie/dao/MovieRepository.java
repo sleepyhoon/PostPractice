@@ -1,5 +1,7 @@
 package practice.postpractice.domain.movie.dao;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import practice.postpractice.domain.movie.domain.Movie;
 
@@ -28,5 +30,5 @@ import java.util.Optional;
  */
 public interface MovieRepository extends JpaRepository<Movie, Integer>,CustomMovieRepository {
     Optional<Movie> findById(Long id);
-    boolean existsById(Long id);
+    Page<Movie> findAll(Pageable pageable);
 }
