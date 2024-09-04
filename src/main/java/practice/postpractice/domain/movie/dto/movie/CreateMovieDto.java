@@ -1,4 +1,4 @@
-package practice.postpractice.domain.movie.dto;
+package practice.postpractice.domain.movie.dto.movie;
 
 /**
  * <br>package name   : practice.postpractice.domain.movie.dto
@@ -22,6 +22,7 @@ package practice.postpractice.domain.movie.dto;
  * </pre>
  */
 public record CreateMovieDto(
-        String title
+        String title,
+        String author
 ) {
 }
