@@ -2,9 +2,7 @@ package practice.postpractice.domain.movie.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import practice.postpractice.domain.movie.dto.MovieResponseDto;
-
-import java.util.List;
+import practice.postpractice.domain.movie.dto.movie.MovieResponseDto;
 
 /**
  * <br>package name   : practice.postpractice.domain.movie.service

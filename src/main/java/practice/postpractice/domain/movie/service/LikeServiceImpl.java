@@ -10,13 +10,11 @@ import practice.postpractice.domain.movie.dao.LikeRepository;
 import practice.postpractice.domain.movie.dao.MovieRepository;
 import practice.postpractice.domain.movie.domain.Like;
 import practice.postpractice.domain.movie.domain.Movie;
-import practice.postpractice.domain.movie.dto.MovieResponseDto;
+import practice.postpractice.domain.movie.dto.movie.MovieResponseDto;
 import practice.postpractice.global.exception.errorCode.ErrorCode;
 import practice.postpractice.global.exception.exception.LikeManagementException;
 import practice.postpractice.global.exception.exception.MemberManageException;
 import practice.postpractice.global.exception.exception.MovieManageException;
-
-import java.util.List;
 
 /**
  * <br>package name   : practice.postpractice.domain.movie.service

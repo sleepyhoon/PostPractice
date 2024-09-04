@@ -1,4 +1,4 @@
-package practice.postpractice.domain.movie.dto;
+package practice.postpractice.domain.movie.dto.like;
 
 /**
  * <br>package name   : practice.postpractice.domain.movie.dto
