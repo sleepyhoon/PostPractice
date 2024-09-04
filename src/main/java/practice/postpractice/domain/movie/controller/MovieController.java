@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import practice.postpractice.domain.dto.response.SuccessResponseDto;
 import practice.postpractice.domain.dto.response.SuccessResponseDtoWithId;
-import practice.postpractice.domain.movie.dto.CreateMovieDto;
-import practice.postpractice.domain.movie.dto.MovieQueryOption;
-import practice.postpractice.domain.movie.dto.MovieResponseDto;
-import practice.postpractice.domain.movie.dto.PageMovieResponseDto;
+import practice.postpractice.domain.movie.dto.movie.CreateMovieDto;
+import practice.postpractice.domain.movie.dto.movie.MovieQueryOption;
+import practice.postpractice.domain.movie.dto.movie.MovieResponseDto;
+import practice.postpractice.domain.movie.dto.movie.PageMovieResponseDto;
 import practice.postpractice.domain.movie.service.LikeService;
 import practice.postpractice.domain.movie.service.MovieService;
 import practice.postpractice.global.utils.SecurityUtil;
@@ -74,7 +74,7 @@ public class MovieController {
     @GetMapping("/search")
     @Operation(summary = "필터링 영화 조회", description = "필터링해서 영화 조회 API")
     @ApiResponse(responseCode = "200",description = "요청에 성공하였습니다",content = @Content(mediaType = "application/json"))
-    public ResponseEntity<PageMovieResponseDto> findMovie(@RequestParam MovieQueryOption movieQueryOption,Pageable pageable) {
+    public ResponseEntity<PageMovieResponseDto> findMovieUsingFiltering(@RequestParam MovieQueryOption movieQueryOption,Pageable pageable) {
         Page<MovieResponseDto> movies = movieService.findMovies(movieQueryOption,pageable);
         PageMovieResponseDto response = PageMovieResponseDto.from(movies);
         return ResponseEntity.ok(response);
@@ -83,7 +83,7 @@ public class MovieController {
     @GetMapping("/{movieId}")
     @Operation(summary = "id로 영화 조회", description = "특정 영화 클릭시 조회 API")
     @ApiResponse(responseCode = "200",description = "요청에 성공하였습니다",content = @Content(mediaType = "application/json"))
-    public ResponseEntity<MovieResponseDto> findMovie(@PathVariable Long movieId) {
+    public ResponseEntity<MovieResponseDto> findMovieById(@PathVariable Long movieId) {
         MovieResponseDto response = movieService.getMovie(movieId);
         return ResponseEntity.ok(response);
     }

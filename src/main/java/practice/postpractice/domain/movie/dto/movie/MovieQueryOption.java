@@ -1,6 +1,4 @@
-package practice.postpractice.domain.movie.dto;
-
-import practice.postpractice.domain.movie.domain.Genre;
+package practice.postpractice.domain.movie.dto.movie;
 
 /**
  * <br>package name   : practice.postpractice.domain.movie.dto

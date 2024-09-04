@@ -1,4 +1,4 @@
-package practice.postpractice.domain.movie.dto;
+package practice.postpractice.domain.movie.dto.movie;
 
 import org.springframework.data.domain.Page;
 

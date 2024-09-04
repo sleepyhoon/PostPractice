@@ -3,12 +3,9 @@ package practice.postpractice.domain.movie.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
-import practice.postpractice.domain.movie.dto.CreateMovieDto;
-import practice.postpractice.domain.movie.dto.MovieQueryOption;
-import practice.postpractice.domain.movie.dto.MovieResponseDto;
-
-import java.io.IOException;
-import java.util.List;
+import practice.postpractice.domain.movie.dto.movie.CreateMovieDto;
+import practice.postpractice.domain.movie.dto.movie.MovieQueryOption;
+import practice.postpractice.domain.movie.dto.movie.MovieResponseDto;
 
 /**
  * <br>package name   : practice.postpractice.domain.movie.service

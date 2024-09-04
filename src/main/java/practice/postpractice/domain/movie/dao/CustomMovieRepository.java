@@ -3,9 +3,7 @@ package practice.postpractice.domain.movie.dao;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import practice.postpractice.domain.movie.domain.Movie;
-import practice.postpractice.domain.movie.dto.MovieQueryOption;
-
-import java.util.List;
+import practice.postpractice.domain.movie.dto.movie.MovieQueryOption;
 
 /**
  * <br>package name   : practice.postpractice.domain.movie.dao

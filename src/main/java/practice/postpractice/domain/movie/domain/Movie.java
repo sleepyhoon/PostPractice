@@ -5,14 +5,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import practice.postpractice.domain.BaseEntity;
-import practice.postpractice.domain.movie.dto.CreateMovieDto;
+import practice.postpractice.domain.movie.dto.movie.CreateMovieDto;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * <br>package name   : practice.postpractice.domain
@@ -46,19 +41,22 @@ public class Movie {
     private long id;
 
     private String title;
+    private String author;
     private String imgPath;
     private LocalDateTime createdAt;
 
     @Builder(access = AccessLevel.PRIVATE)
-    public Movie(String title, String imgPath) {
+    public Movie(String title,String author,String imgPath) {
         this.title = title;
         this.imgPath = imgPath;
+        this.author = author;
         this.createdAt = LocalDateTime.now();
     }
 
     public static Movie create(CreateMovieDto dto,String imgPath) {
         return Movie.builder()
                 .title(dto.title())
+                .author(dto.author())
                 .imgPath(imgPath)
                 .build();
     }

@@ -2,7 +2,6 @@ package practice.postpractice.domain.movie.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,20 +9,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import practice.postpractice.domain.movie.dao.MovieRepository;
 import practice.postpractice.domain.movie.domain.Movie;
-import practice.postpractice.domain.movie.dto.CreateMovieDto;
-import practice.postpractice.domain.movie.dto.MovieQueryOption;
-import practice.postpractice.domain.movie.dto.MovieResponseDto;
+import practice.postpractice.domain.movie.dto.movie.CreateMovieDto;
+import practice.postpractice.domain.movie.dto.movie.MovieQueryOption;
+import practice.postpractice.domain.movie.dto.movie.MovieResponseDto;
 import practice.postpractice.global.exception.errorCode.ErrorCode;
 import practice.postpractice.global.exception.exception.MovieManageException;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -53,7 +49,7 @@ import java.util.UUID;
 public class MovieServiceImpl implements MovieService {
     private final MovieRepository movieRepository;
 
-    private static final String UPLOAD_DIR = "uploads/";
+    private static final String UPLOAD_DIR = "uploads";
 
     @Override
     public Long createMovie(CreateMovieDto dto, MultipartFile file) {
