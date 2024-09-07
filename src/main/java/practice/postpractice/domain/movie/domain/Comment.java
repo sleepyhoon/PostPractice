@@ -1,9 +1,13 @@
 package practice.postpractice.domain.movie.domain;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import practice.postpractice.domain.BaseEntity;
 import practice.postpractice.domain.member.domain.Member;
+import practice.postpractice.domain.movie.dto.comment.CreateCommentDto;
 
 /**
  * <br>package name   : practice.postpractice.domain.movie.domain
@@ -28,6 +32,7 @@ import practice.postpractice.domain.member.domain.Member;
  */
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Comment extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,4 +49,15 @@ public class Comment extends BaseEntity {
 
     @Column(nullable = false)
     private String content;
+
+    @Builder(access = AccessLevel.PRIVATE)
+    public Comment(Movie movie, Member writer, String content) {
+        this.movie = movie;
+        this.writer = writer;
+        this.content = content;
+    }
+
+    public static Comment create(Movie movie, Member writer, String content) {
+        return Comment.builder().movie(movie).writer(writer).content(content).build();
+    }
 }
