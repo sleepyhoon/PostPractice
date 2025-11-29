@@ -2,6 +2,7 @@ package practice.postpractice.domain.movie.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.BatchSize;
 
 /**
  * <br>package name   : practice.postpractice.domain

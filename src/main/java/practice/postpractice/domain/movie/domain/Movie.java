@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 import practice.postpractice.domain.movie.dto.movie.CreateMovieDto;
 
 import java.time.LocalDateTime;
@@ -47,6 +48,7 @@ public class Movie {
     private String imgPath;
     private LocalDateTime createdAt;
 
+    @BatchSize(size = 3)
     @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
     private List<MovieGenre> movieGenreList = new ArrayList<>();
 

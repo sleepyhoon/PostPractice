@@ -8,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 
 /**
  * <br>package name   : practice.postpractice.domain
@@ -32,6 +33,7 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @Getter
+@BatchSize(size = 3)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Genre {
     @Id
