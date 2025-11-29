@@ -116,4 +116,14 @@ public class MovieServiceImpl implements MovieService {
                 .map(ProblemMovieResponseDto::from)
                 .toList();
     }
+
+    @Override
+    public List<ProblemMovieResponseDto> fetchJoinGetMovies() {
+        return jpaMovieRepository.fetchAllMovies()
+                .stream()
+                .map(ProblemMovieResponseDto::from)
+                .toList();
+    }
+
+
 }

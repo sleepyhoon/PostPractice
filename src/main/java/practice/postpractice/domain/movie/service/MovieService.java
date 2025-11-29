@@ -39,4 +39,5 @@ public interface MovieService {
     void deleteMovie(Long movieId);
 
     List<ProblemMovieResponseDto> nProblemGetMovies();
+    List<ProblemMovieResponseDto> fetchJoinGetMovies();
 }

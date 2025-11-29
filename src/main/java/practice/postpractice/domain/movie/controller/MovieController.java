@@ -79,6 +79,11 @@ public class MovieController {
         return ResponseEntity.ok(movieService.nProblemGetMovies());
     }
 
+    @GetMapping("/fetch/search")
+    public ResponseEntity<List<ProblemMovieResponseDto>> FetchFindAllMovies() {
+        return ResponseEntity.ok(movieService.fetchJoinGetMovies());
+    }
+
     @GetMapping("/search")
     @Operation(summary = "필터링 영화 조회", description = "필터링해서 영화 조회 API")
     @ApiResponse(responseCode = "200",description = "요청에 성공하였습니다",content = @Content(mediaType = "application/json"))
