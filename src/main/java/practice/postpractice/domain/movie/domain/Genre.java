@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.Set;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * <br>package name   : practice.postpractice.domain
@@ -27,6 +31,8 @@ import java.util.Set;
  * </pre>
  */
 @Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Genre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +41,9 @@ public class Genre {
 
     private String name;
 
-    @OneToMany(mappedBy = "genre")
-    private Set<MovieGenre> movieGenres = new HashSet<>();
+    @Builder
+    public Genre(String name) {
+        this.name = name;
+    }
 }
 

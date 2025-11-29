@@ -1,6 +1,8 @@
 package practice.postpractice.domain.movie.domain;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -44,6 +46,9 @@ public class Movie {
     private String author;
     private String imgPath;
     private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
+    private List<MovieGenre> movieGenreList = new ArrayList<>();
 
     @Builder(access = AccessLevel.PRIVATE)
     public Movie(String title,String author,String imgPath) {

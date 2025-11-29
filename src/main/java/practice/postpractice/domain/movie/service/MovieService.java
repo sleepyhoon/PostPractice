@@ -1,11 +1,14 @@
 package practice.postpractice.domain.movie.service;
 
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
+import practice.postpractice.domain.movie.domain.Movie;
 import practice.postpractice.domain.movie.dto.movie.CreateMovieDto;
 import practice.postpractice.domain.movie.dto.movie.MovieQueryOption;
 import practice.postpractice.domain.movie.dto.movie.MovieResponseDto;
+import practice.postpractice.domain.movie.dto.movie.ProblemMovieResponseDto;
 
 /**
  * <br>package name   : practice.postpractice.domain.movie.service
@@ -34,4 +37,6 @@ public interface MovieService {
     Page<MovieResponseDto> getAllMovies(Pageable pageable);
     MovieResponseDto getMovie(Long movieId);
     void deleteMovie(Long movieId);
+
+    List<ProblemMovieResponseDto> nProblemGetMovies();
 }

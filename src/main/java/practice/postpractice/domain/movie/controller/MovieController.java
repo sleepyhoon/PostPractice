@@ -4,8 +4,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
@@ -18,6 +20,7 @@ import practice.postpractice.domain.movie.dto.movie.CreateMovieDto;
 import practice.postpractice.domain.movie.dto.movie.MovieQueryOption;
 import practice.postpractice.domain.movie.dto.movie.MovieResponseDto;
 import practice.postpractice.domain.movie.dto.movie.PageMovieResponseDto;
+import practice.postpractice.domain.movie.dto.movie.ProblemMovieResponseDto;
 import practice.postpractice.domain.movie.service.LikeService;
 import practice.postpractice.domain.movie.service.MovieService;
 import practice.postpractice.global.utils.SecurityUtil;
@@ -69,6 +72,11 @@ public class MovieController {
         Page<MovieResponseDto> movies = movieService.getAllMovies(pageable);
         PageMovieResponseDto response = PageMovieResponseDto.from(movies);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/problem/search")
+    public ResponseEntity<List<ProblemMovieResponseDto>> nProblemFindAllMovies() {
+        return ResponseEntity.ok(movieService.nProblemGetMovies());
     }
 
     @GetMapping("/search")

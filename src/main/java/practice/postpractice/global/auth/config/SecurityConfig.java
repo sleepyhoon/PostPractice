@@ -52,10 +52,10 @@ public class SecurityConfig {
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((auth)->
                         auth
-                                .requestMatchers("/movies/**").authenticated()
-                                .anyRequest().permitAll())
-                .addFilterBefore(new JwtAuthenticationFilter(jwtValidator),
-                        UsernamePasswordAuthenticationFilter.class);
+//                                .requestMatchers("/movies/**").authenticated()
+                                .anyRequest().permitAll());
+//                .addFilterBefore(new JwtAuthenticationFilter(jwtValidator),
+//                        UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

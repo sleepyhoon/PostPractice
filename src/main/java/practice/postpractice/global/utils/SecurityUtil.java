@@ -25,8 +25,10 @@ import org.springframework.stereotype.Component;
  * 2024-08-22        SeungHoon              init create
  * </pre>
  */
-@Component
+
 public class SecurityUtil {
+    private SecurityUtil() {}
+
     public static String getCurrentUsername() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication.getName() == null) {

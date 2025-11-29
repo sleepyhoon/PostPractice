@@ -26,6 +26,9 @@ import lombok.Getter;
  */
 @Entity
 @Getter
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"movie_id", "genre_id"})
+})
 public class MovieGenre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

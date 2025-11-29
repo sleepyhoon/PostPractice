@@ -28,7 +28,7 @@ import java.util.Optional;
  * 2024-08-22        SeungHoon              init create
  * </pre>
  */
-public interface MovieRepository extends JpaRepository<Movie, Integer>,CustomMovieRepository {
+public interface MovieRepository extends JpaRepository<Movie, Integer>, CustomMovieRepository {
     Optional<Movie> findById(Long id);
     Page<Movie> findAll(Pageable pageable);
 }
